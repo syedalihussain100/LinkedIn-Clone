@@ -4,14 +4,15 @@ import React, { forwardRef } from 'react';
 import InputOption from './InputOption';
 import "./Post.css";
 
-const Post = forwardRef(({ name, message, description, photoUrl },ref) => {
+const Post = forwardRef(({ name, message, description, photoUrl }, ref) => {
+    console.log('post checking urgent',description)
 
     return (
         <div ref={ref} className='post'>
             <div className="post_header">
-                <Avatar src={photoUrl} />
+                <Avatar src={photoUrl.photoUrl} />
                 <div className="post_info">
-                    <h2>{name}</h2>
+                    <h2>{name.displayName}</h2>
                     <p>{description}</p>
                 </div>
             </div>

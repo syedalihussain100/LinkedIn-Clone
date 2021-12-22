@@ -11,12 +11,14 @@ import { db } from "../config/firebaseservice"
 import firebase from 'firebase/compat/app';
 import LoadingGif from "./icon.gif";
 import FlipMove from 'react-flip-move';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/userSlice';
 
 function Feed() {
     const [input, setInput] = useState("");
     const [post, setPost] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const { displayName, photoUrl } = useSelector(selectUser)
 
     useEffect(() => {
         db.collection('posts').orderBy("timestamp", "desc").onSnapshot(snapshot => (
@@ -30,15 +32,15 @@ function Feed() {
         setTimeout(() => {
             setLoading(false)
         }, 5000);
-    }, [post])
+    }, [])
 
     const handlesubmit = (e) => {
         e.preventDefault();
         db.collection('posts').add({
-            name: "Muhemin ALi",
-            description: "hello description how are you!",
+            name: { displayName },
+            description: new Date().toLocaleTimeString(),
             message: input,
-            photoUrl: "https://avatars.githubusercontent.com/u/59026436?v=4",
+            photoUrl: { photoUrl },
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
         setInput("");

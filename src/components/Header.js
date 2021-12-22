@@ -11,11 +11,12 @@ import { useDispatch } from 'react-redux';
 import { auth } from '../config/firebaseservice';
 import { logout } from '../features/userSlice';
 import LinkedIn from "./download.png"
-
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/userSlice';
 
 function Header() {
     const dispatch = useDispatch()
-
+    const { displayName, photoUrl } = useSelector(selectUser)
     const logoutUser = () => {
         dispatch(logout());
         auth.signOut()
@@ -26,7 +27,7 @@ function Header() {
                 <img src={LinkedIn} alt="logo" />
                 <div className="header_search">
                     <SearchIcon />
-                    <input type="text" />
+                    <input type="text" placeholder="Search....." />
                 </div>
             </div>
             <div className="header_right">
@@ -35,7 +36,7 @@ function Header() {
                 <HeaderOption Icon={BusinessCenter} title="Jobs" />
                 <HeaderOption Icon={Notifications} title="Notification" />
                 <HeaderOption Icon={Chat} title="Chat" />
-                <HeaderOption avator="https://avatars.githubusercontent.com/u/59026436?v=4" title="me" onClick={logoutUser} />
+                <HeaderOption avator={photoUrl} title={displayName} onClick={logoutUser} />
             </div>
         </div>
     )

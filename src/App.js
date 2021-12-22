@@ -12,6 +12,7 @@ import Widgets from './components/Widgets';
 
 function App() {
   const user = useSelector(selectUser);
+  console.log('finaldata',user)
   const dispatch = useDispatch();
 
 
@@ -20,7 +21,9 @@ function App() {
       if (userAuth) {
         //  login
         dispatch(login({
+          displayName: userAuth.displayName,
           email: userAuth.email,
+          photoUrl: userAuth.photoURL,
           uid: userAuth.uid
         }))
       } else {
@@ -29,12 +32,11 @@ function App() {
       }
     })
   }, [])
-  // console.log(user)
+  console.log(user)
   return (
     <div className="App">
-      <Header />
-
       {!user ? <Login /> : <>
+        <Header />
         <div className='app_body'>
           <Sidebar />
           <Feed />
